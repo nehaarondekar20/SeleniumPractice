@@ -4,34 +4,31 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.http.util.Asserts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import basepackage.BaseClass;
 
 
 public class PropertyFileDemo {
-	
+	static WebDriver driver;
+	static File file =new File("C:\\EclipseWorkspaces\\csse120\\SauceDemo\\config.properties");
+	static FileInputStream inputFile;
+	static Properties prop;
 	public static void main(String []args) {
 		
-		File file =new File("C:\\EclipseWorkspaces\\csse120\\SauceDemo\\config.properties");
-		FileInputStream inputFile = null;
+		//initiate property file
 		try {
 			inputFile = new FileInputStream(file);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Properties prop=new Properties();
+		prop=new Properties();
 		try {
 			prop.load(inputFile);
 		} catch (IOException e) {
@@ -39,24 +36,10 @@ public class PropertyFileDemo {
 			e.printStackTrace();
 		}
 		
-		System.setProperty("webdriver.chrome.driver", "D:\\Nehase\\chromedriver_win32 (2)\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		
-		driver.manage().window().maximize();
-		driver.manage().deleteAllCookies();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-
-		driver.get(prop.getProperty("URL"));
-		String titleName=driver.getTitle();
-		System.out.println("Page tile: "+titleName);
-		
-		/*
-		 * //Waitforelement WebDriverWait explicitWait = new WebDriverWait(driver, 30);
-		 * explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-		 * "//input[contains(@type,'submit')")));
-		 */
-		
+		//OpenBrowser
+		BaseClass base=new BaseClass();
+		driver=base.openBrowser(driver);
+	
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {

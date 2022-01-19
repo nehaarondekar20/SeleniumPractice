@@ -21,7 +21,6 @@ public WebDriver openBrowser(WebDriver driver) {
 	try {
 		inputFile = new FileInputStream(file);
 	} catch (FileNotFoundException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
 	prop=new Properties();
